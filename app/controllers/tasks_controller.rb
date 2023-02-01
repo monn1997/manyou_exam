@@ -11,13 +11,16 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    #Task.create(params.require(:task).permit(:title, :content))
-    if @task.save
-      redirect_to new_task_path, notice: "投稿しました！"
-    else
+    if params[:back]
       render :new
-    end  
-  end
+    else     
+      if @task.save
+        redirect_to new_task_path, notice: "投稿しました！"
+      else
+        render :new
+      end  
+    end
+  end    
 
   def show
     @task = Task.find(params[:id])
@@ -43,6 +46,7 @@ class TasksController < ApplicationController
 
   def confirm
     @task = Task.new(task_params)
+    render :new if @task.invalid?
   end  
 
   private
