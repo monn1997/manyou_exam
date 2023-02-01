@@ -41,6 +41,10 @@ class TasksController < ApplicationController
     redirect_to tasks_path, notice:"投稿を削除しました！"
   end
 
+  def confirm
+    @task = Task.new(task_params)
+  end  
+
   private
 
   def task_params
