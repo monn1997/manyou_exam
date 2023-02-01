@@ -8,13 +8,31 @@ class TasksController < ApplicationController
   end
 
   def create
-    Task.create(params.require(:task).permit(:title, :content))
-    redirect_to new_task_path
+    @task = Task.new(task_params)
+    #Task.create(params.require(:task).permit(:title, :content))
+    if @task.save
+      redirect_to new_task_path, notice: "投稿しました！"
+    else
+      render :new
+    end  
   end
 
   def show
     @task = Task.find(params[:id])
   end  
+
+  def edit 
+    @task = Task.find(params[:id])
+  end
+
+  def update 
+    @task = Task.find(params[:id])
+    if @task = Task.find(params[:id])
+      redirect_to tasks_path, notice: "編集しました！"
+    else
+      render :edit
+    end    
+  end
 
   private
 
