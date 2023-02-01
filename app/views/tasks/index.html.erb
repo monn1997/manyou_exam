@@ -1,5 +1,7 @@
 <h1>一覧画面</h1>
 
+<p><%= notice %></p>
+
 <table>
   <tr>
     <th>タイトル</th>
@@ -11,8 +13,8 @@
     <td><%= task.title %></td>
     <td><%= task.content %></td>
     <td><%= link_to '詳細を確認する', task_path(task.id) %></td>
-    <td><%= link_to "編集する", edit_task_path(task.id) %></td>
-    <td><%= link_to 'ブログを削除する', task_path(task.id), method: :delete %></td>
+    <td><%= link_to "編集する", edit_task_path(task.id), data: { confirm: '本当に編集していいですか？' } %></td>
+    <td><%= link_to '削除する', task_path(task.id), method: :delete %></td>
   </tr>
 <% end %>
 </table>
