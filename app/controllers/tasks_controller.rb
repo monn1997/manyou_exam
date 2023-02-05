@@ -12,7 +12,6 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if params[:back]
-      render :new
     else     
       if @task.save
         redirect_to new_task_path, notice: "投稿しました！"
