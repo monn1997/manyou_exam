@@ -4,9 +4,10 @@ RSpec.describe 'タスク管理機能', type: :system do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
         task = FactoryBot.create(:task)
-        visit_new_tasks_path
+        visit new_task_path
         fill_in 'task[content]', with: 'task'
-        click_on '登録する'
+        sleep(3)
+        click_on 'Create Task'
         expect(page).to have_content 'task'
       end
     end
@@ -30,8 +31,9 @@ RSpec.describe 'タスク管理機能', type: :system do
        it '該当タスクの内容が表示される' do
          task = FactoryBot.create(:task)
          visit tasks_path
-         click_on '詳細'
-         expect(page).to have_content 'task'
+         click_on '詳細を確認する'
+         sleep(5)
+         expect(page).to have_content 'タスク1'
        end
      end
   end

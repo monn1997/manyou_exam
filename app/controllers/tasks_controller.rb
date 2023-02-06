@@ -14,7 +14,7 @@ class TasksController < ApplicationController
     if params[:back]
     else     
       if @task.save
-        redirect_to new_task_path, notice: "投稿しました！"
+        redirect_to tasks_path, notice: "投稿しました！"
       else
         render :new
       end  
