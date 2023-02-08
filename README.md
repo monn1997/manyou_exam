@@ -15,3 +15,4 @@
 - $git add
 - $git commit
 - git push heroku step2:master
+- heroku run rails db:migrate
