@@ -3,9 +3,12 @@
 <%= form_with(model: @task, url: tasks_path, local: true) do |form| %>
   <%= form.hidden_field :title %>
   <%= form.hidden_field :content %>
+  <%= form.hidden_field :deadline %>
 
   <p>タイトル:<%= @task.title %></p>
   <p>本文:<%= @task.content %></p>
+  <p>終了期限:<%= @task.deadline %></p>
+
   <%= form.submit  "登録する" %>
 
   <%= form.submit "戻る", name: 'back' %>
