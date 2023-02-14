@@ -7,6 +7,14 @@ class TasksController < ApplicationController
     if params[:sort_expired]
       @tasks = Task.order(deadline: :desc)
     end
+    
+    if params[:task] && params[:task][:status].present?
+      @tasks = @tasks.where(status: "#{params[:task][:status]}")
+    end
+
+    if params[:task] && params[:task][:title].present?
+      @tasks = @tasks.where(title: "#{params[:task][:title]}")
+    end
 
 
   end  
@@ -57,7 +65,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :content, :deadline)
+    params.require(:task).permit(:title, :content, :deadline, :status, :priority)
   end  
 
   def set_task

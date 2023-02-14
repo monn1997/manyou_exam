@@ -23,6 +23,15 @@
       <%= form.label :deadline %>
       <%= form.date_field :deadline %>
     </div>
+    <div class="task_title">
+      <%= form.label :status %>
+      <%= form.select :status, Task.statuses.keys, { include_blank: '選択してください'} %>
+    </div>
+    <div class="task_title">
+      <%= form.label :priority %>
+      <%= form.select :priority, Task.priorities.keys, { include_blank: '選択してください'} %>
+    </div>
+    
     
     <%= form.submit %>
   <% end %>
