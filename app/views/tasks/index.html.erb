@@ -3,6 +3,7 @@
 <p><%= notice %></p>
 
 <p><%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %></p>
+<p><%= link_to "優先順位でソートする", tasks_path(sort_priority: "true") %></p>
 
 <table>
   <tr>
@@ -32,6 +33,7 @@
 
 <br>
 
+<h2>絞り込み検索</h2>
 
 <%= form_with(scope: :task, local: true, url: tasks_path, method: :get) do |form| %>
   <div class="task_title">

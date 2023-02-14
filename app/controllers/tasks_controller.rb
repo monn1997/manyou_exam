@@ -16,6 +16,10 @@ class TasksController < ApplicationController
       @tasks = @tasks.where(title: "#{params[:task][:title]}")
     end
 
+    if params[:sort_priority]
+      @tasks = Task.order(priority: :desc) 
+    end  
+
 
   end  
 
