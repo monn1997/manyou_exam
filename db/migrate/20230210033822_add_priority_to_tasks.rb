@@ -3,3 +3,4 @@ class AddPriorityToTasks < ActiveRecord::Migration[6.1]
     add_column :tasks, :priority, :integer, null: false, default: 0
   end
 end
+#
