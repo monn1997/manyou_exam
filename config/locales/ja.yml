@@ -30,6 +30,11 @@ ja:
       sort by due date: 終了期限順▼
       sort by priority: 優先度順▼
       priority: 優先度
+      first: "&laquo; 最初"
+      last: "最後 &raquo;"
+      previous: "&lsaquo; 前"
+      next: "次 &rsaquo;"
+      truncate: "..."
 
     show:
       list: 一覧

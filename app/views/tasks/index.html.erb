@@ -2,18 +2,28 @@
 
 <p><%= notice %></p>
 
+<p><%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %></p>
+<p><%= link_to "優先順位でソートする", tasks_path(sort_priority: "true") %></p>
+
 <table>
   <tr>
     <th>タイトル</th>
     <th>内容</th>
     <th>作成日時</th>
+    <th>終了期限</th>
+    <th>ステータス</th>
+    <th>優先度</th>
   </tr>
   
 <% @tasks.each do |task| %>
-  <tr>
-    <td class="task_row"><%= task.title %></td>
+  <tr class="task_row">
+    <td><%= task.title %></td>
     <td><%= task.content %></td>
     <td><%= task.created_at %></td>
+    <td><%= task.deadline %></td>
+    <td><%= task.status %></td>
+    <td><%= task.priority %></td>
+    
     <td><%= link_to '詳細を確認する', task_path(task.id) %></td>
     <td><%= link_to "編集する", edit_task_path(task.id), data: { confirm: '本当に編集していいですか？' } %></td>
     <td><%= link_to '削除する', task_path(task.id), method: :delete ,data: { confirm: '本当に削除していいですか？' } %></td>
@@ -23,5 +33,27 @@
 
 <br>
 
+<h2>絞り込み検索</h2>
+
+<%= form_with(scope: :task, local: true, url: tasks_path, method: :get) do |form| %>
+  <div class="task_title">
+    <%= form.label t('.status') %>
+    <%= form.select :status, Task.statuses.keys, { include_blank: '選択してください'} %>
+  </div>
+  
+  <div class="task_title">
+  <%= form.label t('.title') %>
+  <%= form.text_field :title, placeholder: 'タイトル検索' %>
+  </div>
+
+  <%= form.submit %>
+<% end %>
+
+<br>  
 <%= link_to '新しく投稿する', new_task_path %>
 
+<%= paginate @tasks %>
+
+<button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+    Tooltip on top
+</button>
