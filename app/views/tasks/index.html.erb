@@ -16,8 +16,8 @@
   </tr>
   
 <% @tasks.each do |task| %>
-  <tr>
-    <td class="task_row"><%= task.title %></td>
+  <tr class="task_row">
+    <td><%= task.title %></td>
     <td><%= task.content %></td>
     <td><%= task.created_at %></td>
     <td><%= task.deadline %></td>
@@ -42,8 +42,9 @@
   </div>
   
   <div class="task_title">
-    <%= form.label t('.title') %>
-    <%= form.text_field :title %>
+  <%= form.label t('.title') %>
+  <%= form.text_field :title, placeholder: 'タイトル検索' %>
+  #placeholderは実装した時にグレーの文字が検索部位に表示される
   </div>
 
   <%= form.submit %>
@@ -51,4 +52,6 @@
 
 <br>  
 <%= link_to '新しく投稿する', new_task_path %>
+
+<%= paginate @tasks %>
 
