@@ -44,7 +44,6 @@
   <div class="task_title">
   <%= form.label t('.title') %>
   <%= form.text_field :title, placeholder: 'タイトル検索' %>
-  #placeholderは実装した時にグレーの文字が検索部位に表示される
   </div>
 
   <%= form.submit %>
@@ -55,3 +54,6 @@
 
 <%= paginate @tasks %>
 
+<button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+    Tooltip on top
+</button>

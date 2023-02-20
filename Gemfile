@@ -17,6 +17,8 @@ gem 'net-imap'
 gem 'net-pop'
 
 gem 'bootsnap', '>= 1.4.4', require: false
+gem 'bootstrap', '~> 4.1.1'
+gem 'jquery-rails'
 
 group :development, :test do
   
