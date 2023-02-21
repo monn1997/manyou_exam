@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_action :login_required, only: [:new, :create]    
   def index
   end      
 
@@ -9,11 +10,11 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-        # 保存の成功した場合の処理
-      else
-        render :new
-      end
+      redirect_to user_path(@user.id)
+    else
+      render :new
     end
+  end
 
   def show
     @user = User.find(params[:id])
