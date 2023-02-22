@@ -24,8 +24,7 @@
     <td><%= task.deadline %></td>
     <td><%= task.status %></td>
     <td><%= task.priority %></td>
-    <% binding.pry %> 
-    <td><#%= task.user.name %></td>
+    <td><%= task.user.name %></td>
     
     <td><%= link_to '詳細を確認する', task_path(task.id) %></td>
     <td><%= link_to "編集する", edit_task_path(task.id), data: { confirm: '本当に編集していいですか？' } %></td>
