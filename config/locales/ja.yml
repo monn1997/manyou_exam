@@ -24,6 +24,7 @@ ja:
       head: タスク投稿
       user_name: 投稿者
       create_date: 投稿日
+      label_name: ラベル
       due_date: 終了期限
       status: ステータス
       sort by created at: 作成日順に戻す

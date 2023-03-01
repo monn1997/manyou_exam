@@ -88,7 +88,7 @@ RSpec.describe 'タスク管理機能', type: :system do
           visit tasks_path
           sleep(3)
           fill_in 'task[title]', with: 'いぬ'
-          click_on '保存する'
+          click_on '検索'
           expect(page).to have_content task1.title
           expect(page).not_to have_content task2.title
           expect(page).not_to have_content task3.title
@@ -102,7 +102,7 @@ RSpec.describe 'タスク管理機能', type: :system do
           task3 = FactoryBot.create(:task, status: 2 )
           visit tasks_path
           select '未着手', from: 'task[status]'
-          click_on '保存する'
+          click_on '検索'
           expect(page).to have_content task3.title
           # ここに実装する
           # プルダウンを選択する「select」について調べてみること
@@ -120,7 +120,7 @@ RSpec.describe 'タスク管理機能', type: :system do
           visit tasks_path
           fill_in 'task[title]', with: 'いぬ'
           select '未着手', from: 'task[status]'
-          click_on '保存する'
+          click_on '検索'
           expect(page).to have_content task1.title
           expect(page).to have_content task4.status
           expect(page).not_to have_content task2.title
