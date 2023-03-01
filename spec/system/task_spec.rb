@@ -1,10 +1,20 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
+  let!(:user){FactoryBot.create(:user)}
+  
+  def login
+    visit new_session_path
+    fill_in 'session[email]', with: 'normal@gmail.com'
+    fill_in 'session[password]', with: '111111'
+    click_on 'Log in'
+  end  
+
     describe '新規作成機能' do
       context 'タスクを新規作成した場合' do
         it '作成したタスクが表示される' do
           
-          task = FactoryBot.create(:task)
+          task = FactoryBot.create(:task, user_id: user.id)
+          login
           visit new_task_path
           fill_in 'task[content]', with: 'task'
           fill_in 'task[title]', with: 'task'
@@ -26,7 +36,8 @@ RSpec.describe 'タスク管理機能', type: :system do
       context '一覧画面に遷移した場合' do
         it '作成済みのタスク一覧が表示される' do
           # テストで使用するためのタスクを作成
-          task = FactoryBot.create(:task)
+          task = FactoryBot.create(:task, user_id: user.id)
+          login
           # タスク一覧ページに遷移
           visit tasks_path
           # visitした（遷移した）page（タスク一覧ページ）に「task」という文字列が
@@ -39,8 +50,9 @@ RSpec.describe 'タスク管理機能', type: :system do
 
       context 'タスクが作成日時の降順に並んでいる場合' do
         it '新しいタスクが一番上に表示される' do
-          task_1 = FactoryBot.create(:task, title: "タスク1")
-          task_2 = FactoryBot.create(:task, title: "タスク2")
+          task_1 = FactoryBot.create(:task, title: "タスク1", user_id: user.id)
+          task_2 = FactoryBot.create(:task, title: "タスク2", user_id: user.id)
+          login
           visit tasks_path
           task_list = all('.task_row')
           #sleep(5)        
@@ -50,7 +62,8 @@ RSpec.describe 'タスク管理機能', type: :system do
 
       context 'タスクが終了期限の降順に並んでいる場合' do
         it '終了期限が近いものから表示する' do
-          task = FactoryBot.create(:task, title: "タスク1", deadline: "2023-02-10" )
+          task = FactoryBot.create(:task, title: "タスク1", deadline: "2023-02-10", user_id: user.id)
+          login
           visit tasks_path
           click_on '終了期限でソートする'
           task_list = all('.task_row')
@@ -62,7 +75,8 @@ RSpec.describe 'タスク管理機能', type: :system do
     describe '詳細表示機能' do
      context '任意のタスク詳細画面に遷移した場合' do
         it '該当タスクの内容が表示される' do
-         task = FactoryBot.create(:task)
+         task = FactoryBot.create(:task, user_id: user.id)
+         login
          visit tasks_path
          click_on '詳細を確認する'
          expect(page).to have_content 'タスク1'
@@ -82,9 +96,10 @@ RSpec.describe 'タスク管理機能', type: :system do
   
       context 'タイトルであいまい検索をした場合' do
         it "検索キーワードを含むタスクで絞り込まれる" do
-          task1 = FactoryBot.create(:task, title: 'いぬ')
-          task2 = FactoryBot.create(:task, title: 'かわいい')
-          task3 = FactoryBot.create(:task, title: 'すき')
+          task1 = FactoryBot.create(:task, title: 'いぬ', user_id: user.id)
+          task2 = FactoryBot.create(:task, title: 'かわいい', user_id: user.id)
+          task3 = FactoryBot.create(:task, title: 'すき', user_id: user.id)
+          login
           visit tasks_path
           sleep(3)
           fill_in 'task[title]', with: 'いぬ'
@@ -97,9 +112,10 @@ RSpec.describe 'タスク管理機能', type: :system do
 
       context 'ステータス検索をした場合' do
         it "ステータスに完全一致するタスクが絞り込まれる" do
-          task1 = FactoryBot.create(:task, status: 0 )
-          task2 = FactoryBot.create(:task, status: 1 )
-          task3 = FactoryBot.create(:task, status: 2 )
+          task1 = FactoryBot.create(:task, status: 0, user_id: user.id )
+          task2 = FactoryBot.create(:task, status: 1, user_id: user.id )
+          task3 = FactoryBot.create(:task, status: 2, user_id: user.id )
+          login
           visit tasks_path
           select '未着手', from: 'task[status]'
           click_on '検索'
@@ -111,12 +127,13 @@ RSpec.describe 'タスク管理機能', type: :system do
 
       context 'タイトルのあいまい検索とステータス検索をした場合' do
         it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
-          task1 = FactoryBot.create(:task, title: 'いぬ')
-          task2 = FactoryBot.create(:task, title: 'かわいい')
-          task3 = FactoryBot.create(:task, title: 'すき')
-          task4 = FactoryBot.create(:task, status: 0 )
-          task5 = FactoryBot.create(:task, status: 1 )
-          task6 = FactoryBot.create(:task, status: 2 )
+          task1 = FactoryBot.create(:task, title: 'いぬ', user_id: user.id)
+          task2 = FactoryBot.create(:task, title: 'かわいい', user_id: user.id)
+          task3 = FactoryBot.create(:task, title: 'すき', user_id: user.id)
+          task4 = FactoryBot.create(:task, status: 0, user_id: user.id )
+          task5 = FactoryBot.create(:task, status: 1, user_id: user.id )
+          task6 = FactoryBot.create(:task, status: 2, user_id: user.id )
+          login
           visit tasks_path
           fill_in 'task[title]', with: 'いぬ'
           select '未着手', from: 'task[status]'
